@@ -183,8 +183,11 @@ const stripe = new Stripe(process.env.STIPE_KEY);
 
   // Handle the event
   const orderId = event.data.object.metadata.orderId;
-  if(event.type == 'checkout.session.completed'){
+  if(event.type == "checkout.session.completed"){
     await orderModel.findOneAndUpdate({_id : orderId} , {status : "visaPaid"})
+  } else {
+    await orderModel.findOneAndUpdate({_id : orderId} , {status : "failedToPay"})
   }
-  await orderModel.findOneAndUpdate({_id : orderId} , {status : "failedToPay"})
+  
+  return res.status(200).json({message : "Done"})
 });

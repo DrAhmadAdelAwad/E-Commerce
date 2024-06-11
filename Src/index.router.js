@@ -16,6 +16,12 @@ const initApp = (app, express) => {
   connectDB();
 
   app.use(cors());
+  app.use((req, res, next) => {
+    if(req.originalUrl == "/order/webhook"){
+      return next()
+    }
+    express.json ()(req,res,next)
+  })
   app.use(express.json());
   app.get("/" , (req,res,next)=>{
     return res.status(200).json({message : 'Welcome to Ecommerce'})

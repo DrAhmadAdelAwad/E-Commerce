@@ -22,7 +22,6 @@ const initApp = (app, express) => {
     }
     express.json ()(req,res,next)
   })
-  app.use(express.json());
   app.get("/" , (req,res,next)=>{
     return res.status(200).json({message : 'Welcome to Ecommerce'})
   })
